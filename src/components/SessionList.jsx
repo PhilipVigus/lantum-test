@@ -1,55 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import format from "date-fns/format";
+import axios from "axios";
 
 const SessionList = () => {
-  const sessions = [
-    {
-      id: "1243",
-      status: "POSTED",
-      startDatetime: "2020-11-19T16:50:00+00:00",
-      endDatetime: "2020-11-19T19:15:00+00:00",
-      applicationIds: [],
-      practice: { id: "23314", name: "Grant Tree Medical Centre" },
-      locum: null,
-      hourlyRate: 85,
-      staffType: "gp",
-      staffTypeId: "1"
-    },
-    {
-      id: "1242",
-      status: "POSTED",
-      startDatetime: "2020-09-14T08:40:00+00:00",
-      endDatetime: "2020-09-14T18:30:00+00:00",
-      applicationIds: [5509, 5503],
-      practice: { id: "199120", name: "West London Clinic" },
-      locum: null,
-      hourlyRate: 100,
-      staffType: "gp",
-      staffTypeId: "1"
-    }
-  ];
+  const [sessions, setSessions] = useState([]);
+  useEffect(() => {
+    const { CancelToken } = axios;
+    const source = CancelToken.source();
 
-  return (
-    <main>
-      <h2>Session List</h2>
-      {sessions.map((session) => (
-        <div key={session.id}>
-          <h3>{session.practice.name}</h3>
-          <div>
-            {`Shift date: ${format(new Date(session.startDatetime), "P")}`}
-          </div>
-          <div>
-            {`Start time: ${format(new Date(session.startDatetime), "Pp")}`}
-          </div>
-          <div>
-            {`End time: ${format(new Date(session.endDatetime), "Pp")}`}
-          </div>
-          <div>{`Hourly rate: £${session.hourlyRate}`}</div>
-          <div>{`Number of applicants: ${session.applicationIds.length}`}</div>
-        </div>
-      ))}
-    </main>
-  );
+    const getProvidersData = async () => {
+      try {
+        const sessionsResult = await axios.get(
+          "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions",
+          {
+            cancelToken: source.token
+          }
+        );
+
+        setSessions(sessionsResult.data.data);
+      } catch (e) {
+        if (axios.isCancel(e)) {
+          console.log("Providers get request cancelled");
+        } else {
+          console.log(e);
+        }
+      }
+    };
+
+    getProvidersData();
+
+    return () => {
+      source.cancel("Providers get request cancelled");
+    };
+  }, [setSessions]);
+
+  if (sessions) {
+    return (
+      <main>
+        <h2>Session List</h2>
+        {sessions.map((session) => {
+          return (
+            <div key={`${session.id}${session.startDatetime}`}>
+              <h3>{session.practice.name}</h3>
+              <div>
+                {`Shift date: ${format(new Date(session.startDatetime), "P")}`}
+              </div>
+              <div>
+                {`Start time: ${format(new Date(session.startDatetime), "Pp")}`}
+              </div>
+              <div>{`End time: ${session.endDatetime}`}</div>
+              <div>{`Hourly rate: £${session.hourlyRate}`}</div>
+              <div>{`Number of applicants: ${session.applicationIds.length}`}</div>
+            </div>
+          );
+        })}
+      </main>
+    );
+  } else {
+    return <main>Loading sessions</main>;
+  }
 };
 
 export default SessionList;
