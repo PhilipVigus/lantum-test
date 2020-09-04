@@ -3,12 +3,20 @@ import format from "date-fns/format";
 import axios from "axios";
 
 const SessionList = () => {
+  const user = {
+    id: "1234",
+    firstName: "John",
+    lastName: "Doe",
+    staffType: "gp",
+    staffTypeId: "1"
+  };
+
   const [sessions, setSessions] = useState([]);
   useEffect(() => {
     const { CancelToken } = axios;
     const source = CancelToken.source();
 
-    const getProvidersData = async () => {
+    const getSessionsData = async () => {
       try {
         const sessionsResult = await axios.get(
           "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions",
@@ -20,25 +28,33 @@ const SessionList = () => {
         setSessions(sessionsResult.data.data);
       } catch (e) {
         if (axios.isCancel(e)) {
-          console.log("Providers get request cancelled");
+          console.log("Sessions get request cancelled");
         } else {
           console.log(e);
         }
       }
     };
 
-    getProvidersData();
+    getSessionsData();
 
     return () => {
-      source.cancel("Providers get request cancelled");
+      source.cancel("Sessions get request cancelled");
     };
   }, [setSessions]);
+
+  const getFilteredSessions = () => {
+    const filteredSessions = sessions.filter((session) => {
+      return session;
+    });
+
+    return filteredSessions;
+  };
 
   if (sessions) {
     return (
       <main>
         <h2>Session List</h2>
-        {sessions.map((session) => {
+        {getFilteredSessions().map((session) => {
           return (
             <div key={`${session.id}${session.startDatetime}`}>
               <h3>{session.practice.name}</h3>
