@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import format from "date-fns/format";
 import isPast from "date-fns/isPast";
 import axios from "axios";
+import Session from "./Session";
 
 const SessionList = () => {
   const user = {
@@ -74,18 +74,10 @@ const SessionList = () => {
         <h2>Session List</h2>
         {getFilteredSessions().map((session) => {
           return (
-            <div key={`${session.id}${session.startDatetime}`}>
-              <h3>{session.practice.name}</h3>
-              <div>
-                {`Shift date: ${format(new Date(session.startDatetime), "P")}`}
-              </div>
-              <div>
-                {`Start time: ${format(new Date(session.startDatetime), "Pp")}`}
-              </div>
-              <div>{`End time: ${session.endDatetime}`}</div>
-              <div>{`Hourly rate: £${session.hourlyRate}`}</div>
-              <div>{`Number of applicants: ${session.applicationIds.length}`}</div>
-            </div>
+            <Session
+              key={`${session.id}${session.startDatetime}`}
+              session={session}
+            />
           );
         })}
       </main>

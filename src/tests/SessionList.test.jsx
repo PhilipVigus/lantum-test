@@ -45,14 +45,6 @@ describe("SessionList", () => {
     expect(
       await screen.findByRole("heading", { name: "Manchester Hospital" })
     ).toBeInTheDocument();
-    expect(screen.getByText("Shift date: 10/19/2020")).toBeInTheDocument();
-    expect(
-      screen.getByText("Start time: 10/19/2020, 9:30 AM")
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText("End time: 2020-10-19T16:15:00+00:00")
-    ).toBeInTheDocument();
-    expect(screen.getByText("Hourly rate: £85")).toBeInTheDocument();
   });
 
   it("filters out different staff type ids", async () => {
