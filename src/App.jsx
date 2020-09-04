@@ -1,8 +1,8 @@
 import React from "react";
-import Main from "./components/Main";
+import SessionList from "./components/SessionList";
 
 const App = () => {
-  return <Main />;
+  return <SessionList />;
 };
 
 export default App;
