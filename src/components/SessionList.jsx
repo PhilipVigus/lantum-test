@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import format from "date-fns/format";
+import isPast from "date-fns/isPast";
 import axios from "axios";
 
 const SessionList = () => {
@@ -45,6 +46,10 @@ const SessionList = () => {
   const getFilteredSessions = () => {
     const filteredSessions = sessions.filter((session) => {
       if (user.staffTypeId !== session.staffTypeId) {
+        return false;
+      }
+
+      if (isPast(new Date(session.startDatetime))) {
         return false;
       }
 
