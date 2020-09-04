@@ -57,6 +57,11 @@ const SessionList = () => {
         return false;
       }
 
+      if (session.locum !== null) {
+        console.log("filtered");
+        return false;
+      }
+
       return true;
     });
 
