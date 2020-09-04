@@ -58,7 +58,6 @@ const SessionList = () => {
       }
 
       if (session.locum !== null) {
-        console.log("filtered");
         return false;
       }
 
