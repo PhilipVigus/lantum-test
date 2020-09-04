@@ -2,25 +2,41 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import configureStore from "redux-mock-store";
+import { Provider } from "react-redux";
 import SessionList from "../components/SessionList";
 
+const mockStore = configureStore([]);
+
 describe("SessionList", () => {
-  let mock;
+  const store = mockStore({
+    user: {
+      details: {
+        id: "1234",
+        firstName: "John",
+        lastName: "Doe",
+        staffType: "gp",
+        staffTypeId: "1"
+      }
+    }
+  });
+
+  let mockAxios;
 
   beforeAll(() => {
-    mock = new MockAdapter(axios);
+    mockAxios = new MockAdapter(axios);
   });
 
   afterEach(() => {
-    mock.reset();
+    mockAxios.reset();
   });
 
   afterAll(() => {
-    mock.restore();
+    mockAxios.restore();
   });
 
   it("renders the list of sessions", async () => {
-    mock
+    mockAxios
       .onGet(
         "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions"
       )
@@ -40,7 +56,12 @@ describe("SessionList", () => {
           }
         ]
       });
-    render(<SessionList />);
+
+    render(
+      <Provider store={store}>
+        <SessionList />
+      </Provider>
+    );
 
     expect(
       await screen.findByRole("heading", { name: "Manchester Hospital" })
@@ -48,7 +69,7 @@ describe("SessionList", () => {
   });
 
   it("filters out different staff type ids", async () => {
-    mock
+    mockAxios
       .onGet(
         "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions"
       )
@@ -80,8 +101,12 @@ describe("SessionList", () => {
           }
         ]
       });
-    render(<SessionList />);
 
+    render(
+      <Provider store={store}>
+        <SessionList />
+      </Provider>
+    );
     expect(
       await screen.findByRole("heading", { name: "Manchester Hospital" })
     ).toBeInTheDocument();
@@ -91,7 +116,7 @@ describe("SessionList", () => {
   });
 
   it("filters out invalid start dates", async () => {
-    mock
+    mockAxios
       .onGet(
         "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions"
       )
@@ -123,7 +148,12 @@ describe("SessionList", () => {
           }
         ]
       });
-    render(<SessionList />);
+
+    render(
+      <Provider store={store}>
+        <SessionList />
+      </Provider>
+    );
 
     expect(
       await screen.findByRole("heading", { name: "Manchester Hospital" })
@@ -134,7 +164,7 @@ describe("SessionList", () => {
   });
 
   it("filters out sessions whose status is not POSTED", async () => {
-    mock
+    mockAxios
       .onGet(
         "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions"
       )
@@ -166,8 +196,11 @@ describe("SessionList", () => {
           }
         ]
       });
-    render(<SessionList />);
-
+    render(
+      <Provider store={store}>
+        <SessionList />
+      </Provider>
+    );
     expect(
       await screen.findByRole("heading", { name: "Manchester Hospital" })
     ).toBeInTheDocument();
@@ -177,7 +210,7 @@ describe("SessionList", () => {
   });
 
   it("filters out sessions whose locum is not null", async () => {
-    mock
+    mockAxios
       .onGet(
         "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions"
       )
@@ -209,7 +242,12 @@ describe("SessionList", () => {
           }
         ]
       });
-    render(<SessionList />);
+
+    render(
+      <Provider store={store}>
+        <SessionList />
+      </Provider>
+    );
 
     expect(
       await screen.findByRole("heading", { name: "Manchester Hospital" })

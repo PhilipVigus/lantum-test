@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import isPast from "date-fns/isPast";
 import axios from "axios";
 import styled from "styled-components";
@@ -10,16 +11,7 @@ const StyledHeading = styled.h2`
 `;
 
 const SessionList = () => {
-  // should be moved into global state, but I ran out of time
-  // I would probably use redux for this, as I find it easier
-  // to work with than contexts
-  const user = {
-    id: "1234",
-    firstName: "John",
-    lastName: "Doe",
-    staffType: "gp",
-    staffTypeId: "1"
-  };
+  const userStaffType = useSelector((state) => state.user.details.staffTypeId);
 
   // kept this as local component state, as at the moment
   // the data is only being used by this component
@@ -64,7 +56,7 @@ const SessionList = () => {
       // out of time and was unable to investigate ways of
       // handling multiple tests in a more succinct way that
       // was still easy to read
-      if (user.staffTypeId !== session.staffTypeId) {
+      if (userStaffType !== session.staffTypeId) {
         return false;
       }
 
