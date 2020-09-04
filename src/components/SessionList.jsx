@@ -44,7 +44,11 @@ const SessionList = () => {
 
   const getFilteredSessions = () => {
     const filteredSessions = sessions.filter((session) => {
-      return session;
+      if (user.staffTypeId !== session.staffTypeId) {
+        return false;
+      }
+
+      return true;
     });
 
     return filteredSessions;
