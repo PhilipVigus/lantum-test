@@ -1,8 +1,14 @@
 import React from "react";
 import SessionList from "./components/SessionList";
+import GlobalStyle from "./GlobalStyle";
 
 const App = () => {
-  return <SessionList />;
+  return (
+    <>
+      <GlobalStyle />
+      <SessionList />
+    </>
+  );
 };
 
 export default App;

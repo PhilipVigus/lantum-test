@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import isPast from "date-fns/isPast";
 import axios from "axios";
+import styled from "styled-components";
 import Session from "./Session";
 
+const StyledHeading = styled.h2`
+  font-size: 3rem;
+  text-align: center;
+`;
+
 const SessionList = () => {
+  // should be moved into global state, but I ran out of time
+  // I would probably use redux for this, as I find it easier
+  // to work with than contexts
   const user = {
     id: "1234",
     firstName: "John",
@@ -12,7 +21,13 @@ const SessionList = () => {
     staffTypeId: "1"
   };
 
+  // kept this as local component state, as at the moment
+  // the data is only being used by this component
+  // it's likely that should the app get more complex, this
+  // may need to be elevated to global state if it's accessed
+  // by a lot of components
   const [sessions, setSessions] = useState([]);
+
   useEffect(() => {
     const { CancelToken } = axios;
     const source = CancelToken.source();
@@ -45,6 +60,10 @@ const SessionList = () => {
 
   const getFilteredSessions = () => {
     const filteredSessions = sessions.filter((session) => {
+      // Not happy with the length of this method, but I ran
+      // out of time and was unable to investigate ways of
+      // handling multiple tests in a more succinct way that
+      // was still easy to read
       if (user.staffTypeId !== session.staffTypeId) {
         return false;
       }
@@ -67,10 +86,16 @@ const SessionList = () => {
     return filteredSessions;
   };
 
+  // there needs to be some kind of error handling in here
+  // for dealing with what happens if the component fails to
+  // get the sessions data from the API
+  // I'd probably introduce an error state variable that
+  // is checked at this point and use this to decide whether
+  // to display a user friendly error message or not
   if (sessions) {
     return (
       <main>
-        <h2>Session List</h2>
+        <StyledHeading>Session List</StyledHeading>
         {getFilteredSessions().map((session) => (
           <Session
             key={`${session.id}${session.startDatetime}`}
