@@ -53,6 +53,10 @@ const SessionList = () => {
         return false;
       }
 
+      if (session.status !== "POSTED") {
+        return false;
+      }
+
       return true;
     });
 
