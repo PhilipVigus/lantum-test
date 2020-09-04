@@ -50,6 +50,10 @@ Depending on the future direction of the project, it might be necessary to do mo
 
 The project currently only uses a couple of semantic html tags. This is unhelpful from an accessibility perspective, and I would like to do a pass over the code and add them where appropriate. An example addition would be using the time tag in the Session component. Another addition might be to use section or article tags for each session.
 
+### Error handling
+
+Apart from a few logs to console if the SessionsList fails to retrieve the data from the API, there is no error handling at the moment. I would like to add some kind of check to the SessionsList component and render an appropriate message if the GET request fails.
+
 ### Styling
 
 The styling is obvious bare bones at the moment. I'd like to a little work to improve this, adding some colour, making the hierarchy of information clearer and generally smartening it up.
