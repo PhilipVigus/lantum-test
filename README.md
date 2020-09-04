@@ -32,7 +32,7 @@ yarn test
 
 ### Formatting the end time
 
-I had an issue with the endTimeDate's of some of the data passed back by the API. One or two of them had a month of 13, which meant that creating a Date object from the string threw an error. I didn't have time to investigate this further, so left the End time unformatted in the Session component.
+I had an issue with the endTimeDates of some of the data passed back by the API. One or two of them had a month of 13, which meant that creating a Date object from the string threw an error. I didn't have time to investigate this further, so left the End time unformatted in the Session component.
 
 ### Adding global state
 
@@ -48,7 +48,7 @@ Depending on the future direction of the project, it might be necessary to do mo
 
 ### Accessibility
 
-The project currently only uses a couple of semantic html tags. This is unhelpful from an accessibility perspective, and I would like to do a pass over the code and add them where appropriate. An example addition would be using the time tag in the Session component. Another addition might be to use session or article tags for each session.
+The project currently only uses a couple of semantic html tags. This is unhelpful from an accessibility perspective, and I would like to do a pass over the code and add them where appropriate. An example addition would be using the time tag in the Session component. Another addition might be to use section or article tags for each session.
 
 ### Styling
 
