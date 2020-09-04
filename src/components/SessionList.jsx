@@ -71,14 +71,12 @@ const SessionList = () => {
     return (
       <main>
         <h2>Session List</h2>
-        {getFilteredSessions().map((session) => {
-          return (
-            <Session
-              key={`${session.id}${session.startDatetime}`}
-              session={session}
-            />
-          );
-        })}
+        {getFilteredSessions().map((session) => (
+          <Session
+            key={`${session.id}${session.startDatetime}`}
+            session={session}
+          />
+        ))}
       </main>
     );
   } else {
