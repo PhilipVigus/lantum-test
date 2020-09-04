@@ -5,22 +5,22 @@ import MockAdapter from "axios-mock-adapter";
 import App from "../App";
 
 describe("App", () => {
-  let mock;
+  let mockAxios;
 
   beforeAll(() => {
-    mock = new MockAdapter(axios);
+    mockAxios = new MockAdapter(axios);
   });
 
   afterEach(() => {
-    mock.reset();
+    mockAxios.reset();
   });
 
   afterAll(() => {
-    mock.restore();
+    mockAxios.restore();
   });
 
   it("renders the App", async () => {
-    mock
+    mockAxios
       .onGet(
         "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions"
       )
