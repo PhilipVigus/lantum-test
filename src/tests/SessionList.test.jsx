@@ -184,7 +184,7 @@ describe("SessionList", () => {
     ).toBeNull();
   });
 
-  it("filters out sessions whose status is not POSTED", async () => {
+  it("filters out sessions whose locum is not null", async () => {
     mock
       .onGet(
         "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions"
