@@ -64,4 +64,4 @@ The styling is obvious bare bones at the moment. I'd like to a little work to im
 
 ## A note on timings
 
-Depending on whether you count writing the Improvements part of the readme or not, I am either just over 2 hours or at around 2.5 hours as I had to take an unexpected break near the start of the project. In the event that you want to include the readme as part of the overall time, I've kept any coding done after the 2 hours in a separate branch called redux. The only thing this added to the project was global state to sture the user details in.
+Depending on whether you count writing the Improvements part of the readme or not, I am either just over 2 hours or at around 2.5 hours as I had to take an unexpected break near the start of the project. In the event that you want to include the readme as part of the overall time, I've kept any coding done after the 2 hours in a separate branch called redux. The only thing this added to the project was global state to store the user details in.
