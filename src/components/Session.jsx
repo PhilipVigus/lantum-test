@@ -26,7 +26,9 @@ const Session = ({ session }) => {
   // span two days
   return (
     <StyledSession>
-      <StyledHeading>{session.practice.name}</StyledHeading>
+      <StyledHeading data-testid="sessionHeading">
+        {session.practice.name}
+      </StyledHeading>
       <div>{`Shift date: ${format(new Date(session.startDatetime), "P")}`}</div>
       <div>
         {`Start time: ${format(new Date(session.startDatetime), "Pp")}`}
