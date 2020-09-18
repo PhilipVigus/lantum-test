@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import SessionList from "../components/SessionList";
@@ -295,6 +295,9 @@ describe("SessionList", () => {
       });
 
     render(<SessionList />);
+
+    const button = await screen.findByRole("button", { name: "Sort" });
+    fireEvent.click(button);
 
     const headings = await screen.findAllByTestId("sessionHeading");
     expect(headings[0]).toHaveTextContent("London Hospital");
