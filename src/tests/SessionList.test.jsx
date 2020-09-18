@@ -218,4 +218,45 @@ describe("SessionList", () => {
       screen.queryByRole("heading", { name: "London Hospital" })
     ).toBeNull();
   });
+
+  it("renders a sort button", async () => {
+    mock
+      .onGet(
+        "https://vvgv5rubu3.execute-api.eu-west-2.amazonaws.com/dev/sessions"
+      )
+      .replyOnce(200, {
+        data: [
+          {
+            id: "1235",
+            status: "POSTED",
+            startDatetime: "2020-10-19T08:30:00+00:00",
+            endDatetime: "2020-10-19T16:15:00+00:00",
+            applicationIds: [123, 234],
+            practice: { id: "1235", name: "Manchester Hospital" },
+            locum: null,
+            hourlyRate: 85,
+            staffType: "gp",
+            staffTypeId: "1"
+          },
+          {
+            id: "1237",
+            status: "POSTED",
+            startDatetime: "2020-10-19T08:30:00+00:00",
+            endDatetime: "2020-10-19T16:15:00+00:00",
+            applicationIds: [123, 234],
+            practice: { id: "1235", name: "London Hospital" },
+            locum: null,
+            hourlyRate: 85,
+            staffType: "gp",
+            staffTypeId: "1"
+          }
+        ]
+      });
+
+    render(<SessionList />);
+
+    expect(
+      await screen.findByRole("button", { name: "Sort" })
+    ).toBeInTheDocument();
+  });
 });

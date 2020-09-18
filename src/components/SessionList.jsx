@@ -96,6 +96,7 @@ const SessionList = () => {
     return (
       <main>
         <StyledHeading>Session List</StyledHeading>
+        <button type="button">Sort</button>
         {getFilteredSessions().map((session) => (
           <Session
             key={`${session.id}${session.startDatetime}`}
